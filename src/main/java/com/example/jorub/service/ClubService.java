@@ -23,10 +23,11 @@ public class ClubService {
 
     /* 그룹 생성 후 저장 */
     @Transactional
-    public Long save(ClubRequestDto clubRequestDto) {
+    public ClubResponseDto save(ClubRequestDto clubRequestDto) {
         Club club = clubRequestDto.toEntity();
         clubRepository.save(club);
-        return club.getId();
+        return new ClubResponseDto(club);
+//        return clubRequestDto;
     }
 
     /* 그룹 상세 조회 */

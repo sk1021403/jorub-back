@@ -1,16 +1,17 @@
 package com.example.jorub.controller;
 
-import com.example.jorub.domain.Club;
 import com.example.jorub.domain.dto.ClubDetailResponseDto;
 import com.example.jorub.domain.dto.ClubRequestDto;
 import com.example.jorub.domain.dto.ClubResponseDto;
 import com.example.jorub.service.ClubService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*") // 컨트롤러에서 설정
 @RequiredArgsConstructor
 @RequestMapping("/clubs")
 @RestController
@@ -20,7 +21,7 @@ public class ClubController {
 
     /* 새로운 그룹 생성 */
     @PostMapping("/new")
-    public ResponseEntity<Long> createClub (@RequestBody ClubRequestDto clubRequestDto) {
+    public ResponseEntity<ClubResponseDto> createClub (@RequestBody ClubRequestDto clubRequestDto) {
         return ResponseEntity.ok(clubService.save(clubRequestDto));
     }
 
@@ -28,6 +29,7 @@ public class ClubController {
     @GetMapping("/{clubId}")
     public ResponseEntity<ClubDetailResponseDto> getClubDetail(@PathVariable Long clubId) {
         return ResponseEntity.ok(clubService.findById(clubId));
+//        return new ResponseEntity<ClubDetailResponseDto>(clubService.findById(clubId),HttpStatus.CREATED);
     }
 
     /* 전체 그룹 리스트 조회 */
